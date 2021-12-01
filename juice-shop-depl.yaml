@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: juice-shop-deployment
+  namespace: juice-shop
   labels:
     app: juice-shop
 spec:
