@@ -14,6 +14,7 @@ minikube addons enable ingress
 
 # Deployment of the juice-shop service
 
+```
       ┌─────────────────────────────────────────────────┐
       │                                                 │
       │  Kubernetes Cluster   ┌────────────────────┐    │
@@ -38,6 +39,7 @@ minikube addons enable ingress
 └─────────────┤http://juiceshop-creativity.com/│
               └────────────────────────────────┘
 
+```
 - The creation of the namespace is in the file `juice-shop-namespace.yaml`. We handle the deployment, service exposure and ingress rules within the same namespace "juice-shop".
 - The file `juice-shop-depl.yaml` specifies the parameters for the deployment. Only one replica of the pod running the container with the image bkimminich/juice-shop is necessary. No other parameters like resource limits are necessary since the deployment is very small.
 - The file `juice-shop-svc.yaml` exposes as a service the port 3000 of the pods running juice-shop to the internal network of the cluster.
