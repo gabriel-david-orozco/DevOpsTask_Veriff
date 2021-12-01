@@ -2,19 +2,48 @@
 
 In this case, I used Minikube for the sake of simplicity.
 
-Minikube version is: v1.24.0
-Kubernetes client version: v1.22.4
-Kubernetes server version: v1.22.3
+- Minikube version is: v1.24.0
+- Kubernetes client version: v1.22.4
+- Kubernetes server version: v1.22.3
 
-Additionally, running 
+Additionally, it's necessary to activate the ingress-nginx in minikube:
+
+```
+minikube addons enable ingress
+```
+
 # Deployment of the juice-shop service
+
+      ┌─────────────────────────────────────────────────┐
+      │                                                 │
+      │  Kubernetes Cluster   ┌────────────────────┐    │
+      │                       │  juice-shop-depl   │    │
+      │                       │  ┌──────────────┐  │    │
+      │                       │  │    pods      │  │    │
+   ┌──┴───────┐            ┌──┴──┴───┐ ┌──────┐ │  │    │
+   │          │            │juice-   │ │juice-│ │  │    │
+   │ ingress- │       :3000│  shop   │ │  shop│ │  │    │
+┌──┤►  nginx  ├────────────┤  service│ │docker│ │  │    │
+│  │          │            │         │ │      │ │  │    │
+│  └──┬───────┘            └──┬──┬───┘ └──────┘ │  │    │
+│     │                       │  │              │  │    │
+│     │                       │  └──────────────┘  │    │
+│     │                       │                    │    │
+│     │                       └────────────────────┘    │
+│     │                                                 │
+│     │                                                 │
+│     └─────────────────────────────────────────────────┘
+│                URL
+│             ┌────────────────────────────────┐
+└─────────────┤http://juiceshop-creativity.com/│
+              └────────────────────────────────┘
 
 - The creation of the namespace is in the file `juice-shop-namespace.yaml`. We handle the deployment, service exposure and ingress rules within the same namespace "juice-shop".
 - The file `juice-shop-depl.yaml` specifies the parameters for the deployment. Only one replica of the pod running the container with the image bkimminich/juice-shop is necessary. No other parameters like resource limits are necessary since the deployment is very small.
 - The file `juice-shop-svc.yaml` exposes as a service the port 3000 of the pods running juice-shop to the internal network of the cluster.
 - `nginx-ingress.yaml` file creates the rules of ingress to use.
 
-This part of the code specifies that the domain `juiceshop-creativity.com` should provide access to the juice-shop service. In the service block the name and the port points to that service.
+This part of the code specifies that the domain `juiceshop-creativity.com` should provide access to the juice-shop service. In the service block the name and the port points to that service. It is important to mention that domain shold be resolved to the cluster IP, for UNIX system adding the route in the /etc/hosts file is enough
 
 ```
 spec:
