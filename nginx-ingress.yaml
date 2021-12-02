@@ -10,7 +10,7 @@ metadata:
   namespace: juice-shop
 spec:
   rules:
-  - host: juiceshop-creativity.com
+  - host: juice-shop-creativity.link
     http:
       paths:
             - path: /
