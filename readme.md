@@ -187,8 +187,8 @@ NAME                 CLASS    HOSTS                        ADDRESS              
 juice-shop-ingress   <none>   juice-shop-creativity.link   a9327a86cb45b48b59e1c1fd09b6487a-8066124fa7667380.elb.us-east-1.amazonaws.com   80      49m
 ```
 
-In AWS we create can create a Route53 domain pointing to the loadbalancer DNS and it will be working
+In AWS we create can create a Route53 domain pointing to the loadbalancer DNS and it will be working for public access
 
 In our case, the public IP provided by the cluster is `54.160.27.207` so adding the hostname policy `54.160.27.207 juice-shop-creativity.link` in `/et/hosts` will be enough
 
-Now, we can test the same SQL injections as in the Minikube deployment
+Now, we can test the same SQL injections as in the Minikube deployment.
